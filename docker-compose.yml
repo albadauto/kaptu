@@ -1,0 +1,60 @@
+services:
+  kaptu-sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: kaptu-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "StrongPassword!123"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - kaptu-network
+
+  kaptu-api:
+    container_name: kaptu-api
+    build:
+      context: .
+      dockerfile: Kaptu.ApiService/Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+
+      # Connection String da API
+      ConnectionStrings__DefaultConnection: >
+        Server=kaptu-sqlserver,1433;
+        Database=KaptuDb;
+        User Id=sa;
+        Password=StrongPassword!123;
+        TrustServerCertificate=True;
+    depends_on:
+      - kaptu-sqlserver
+    networks:
+      - kaptu-network
+
+  kaptu-web:
+    container_name: kaptu-web
+    build:
+      context: .
+      dockerfile: Kaptu.Web/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      Api__BaseUrl: http://kaptu-api:8080
+    depends_on:
+      - kaptu-api
+    networks:
+      - kaptu-network
+
+networks:
+  kaptu-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:

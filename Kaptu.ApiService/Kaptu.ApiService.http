@@ -1,0 +1,6 @@
+@Kaptu.ApiService_HostAddress = http://localhost:5036
+
+GET {{Kaptu.ApiService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

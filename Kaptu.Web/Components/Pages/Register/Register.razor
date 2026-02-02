@@ -1,0 +1,75 @@
+﻿@page "/register"
+<div class="gradient-bg d-flex justify-center align-center" style="min-height:100vh;">
+    <MudPaper Elevation="12" Class="pa-8" Style="width:100%; max-width:450px; border-radius:20px;">
+
+        <MudText Typo="Typo.h5" Class="mb-6 text-center">
+            Cadastro de Usuário
+        </MudText>
+
+        <MudForm @ref="form">
+
+            <MudTextField T="string"
+                          Label="Nome"
+                          @bind-Value="user.Name"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          Placeholder="Nome"
+                          StartIcon="@Icons.Material.Filled.Person"
+                          Class="mb-4" />
+
+            <MudTextField T="string"
+                          Label="Email"
+                          @bind-Value="user.Email"
+                          Variant="Variant.Filled"
+                          Required="true"
+                          Placeholder="E-mail"
+                          StartIcon="@Icons.Material.Filled.Email"
+                          Class="mb-4" />
+
+            <MudTextField T="string"
+                          Label="Senha"
+                          @bind-Value="user.Password"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Password"
+                          Required="true"
+                          Placeholder="Senha"
+                          StartIcon="@Icons.Material.Filled.Lock"
+                          Class="mb-4" />
+
+            <MudTextField T="string"
+                          Label="Senha"
+                          @bind-Value="user.TenantName"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Password"
+                          Required="true"
+                          Placeholder="Nome da empresa"
+                          StartIcon="@Icons.Material.Filled.Lock"
+                          Class="mb-4" />
+
+            <MudButton Color="Color.Primary"
+                       Variant="Variant.Filled"
+                       Size="Size.Large"
+                       FullWidth="true"
+                       OnClick="Submit">
+                Salvar
+            </MudButton>
+
+        </MudForm>
+
+    </MudPaper>
+</div>
+
+@code {
+    private MudForm form;
+    private UserDTO user = new();
+
+    private async Task Submit()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            // salvar usuário
+        }
+    }
+}

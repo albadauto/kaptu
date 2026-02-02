@@ -1,0 +1,18 @@
+﻿@rendermode InteractiveServer
+
+<MudThemeProvider Theme="@_theme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code {
+    private MudTheme _theme = new MudTheme()
+    {
+        PaletteLight = new PaletteLight()
+        {
+            Primary = "#3a29a6",     // cor primária
+            Secondary = "#f26444",   // cor secundária
+
+        }
+    };
+}

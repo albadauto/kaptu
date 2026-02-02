@@ -1,0 +1,130 @@
+﻿@page "/bepremium"
+@inject IPlanRepository PlanRepository
+@rendermode InteractiveServer
+@using System.Threading.Tasks
+<div class="gradient-bg">
+    <MudContainer MaxWidth="MaxWidth.Large"
+                  Class="d-flex flex-column align-center justify-center"
+                  Style="min-height: 100vh;">
+
+        <MudText Typo="Typo.h4" Class="mb-6 text-white text-center mt-5">
+            Escolha seu plano Premium
+        </MudText>
+
+        <MudGrid Spacing="4" Justify="Justify.Center">
+
+            <!-- Plano Mensal -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="10" Class="pa-6 text-center">
+                    <MudText Typo="Typo.h6">Starter</MudText>
+
+                    <MudText Typo="Typo.h4" Color="Color.Primary" Class="my-4">
+                        R$ 59,90
+                    </MudText>
+
+                    <MudDivider Class="my-3" />
+
+                    <ul class="plan-list">
+                        <li>1 usuário</li>
+                        <li>Até 100 leads</li>
+                        <li>Até 30 imóveis</li>
+                        <li>Funil de vendas</li>
+                        <li>Agenda e follow-up</li>
+                        <li>Dashboard simples</li>
+                        <li>Suporte por email</li>
+                        <li>Trial 14 dias</li>
+                    </ul>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth
+                               Class="mt-4" OnClick="async () => await SetSelectedPlan(1)">
+                        Escolher plano
+                    </MudButton>
+                </MudPaper>
+            </MudItem>
+
+            <!-- Plano Anual (Destaque) -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="16"
+                          Class="pa-6 text-center"
+                          Style="border: 2px solid var(--mud-palette-primary);">
+
+                    <MudChip Color="Color.Primary" T="string"
+                             Variant="Variant.Filled"
+                             Class="mb-2">
+                        Mais popular
+                    </MudChip>
+
+                    <MudText Typo="Typo.h6">Plano Pro</MudText>
+
+                    <MudText Typo="Typo.h4" Color="Color.Primary" Class="my-4">
+                        R$ 119,90
+                    </MudText>
+
+                    <MudText Typo="Typo.body2" Color="Color.Secondary">
+                        Economize 20%
+                    </MudText>
+
+                    <MudDivider Class="my-3" />
+
+                    <ul class="plan-list">
+                        <li>1 usuário</li>
+                        <li>Até 500 leads</li>
+                        <li>Até 150 imóveis</li>
+                        <li>Funil personalizável</li>
+                        <li>Follow-up completo</li>
+                        <li>Upload de documentos</li>
+                        <li>Suporte prioritário</li>
+                        <li>Trial 14 dias</li>
+                    </ul>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth
+                               Class="mt-4" OnClick="async () => await SetSelectedPlan(2)">
+                        Escolher plano
+                    </MudButton>
+                </MudPaper>
+            </MudItem>
+
+            <!-- Plano Vitalício -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="10" Class="pa-6 text-center">
+                    <MudText Typo="Typo.h6">Plano Imobiliária</MudText>
+
+                    <MudText Typo="Typo.h4" Color="Color.Primary" Class="my-4">
+                        R$ 299,90
+                    </MudText>
+
+                    <MudDivider Class="my-3" />
+
+                    <ul class="plan-list">
+                        <li>Até 3 usuários</li>
+                        <li>Leads ilimitados</li>
+                        <li>Imóveis ilimitados</li>
+                        <li>Dashboard geral</li>
+                        <li>Permissões básicas</li>
+                        <li>Suporte prioritário</li>
+                    </ul>
+
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               FullWidth
+                               Class="mt-4" OnClick="async () => await SetSelectedPlan(3)">
+                        Escolher plano
+                    </MudButton>
+                </MudPaper>
+            </MudItem>
+
+        </MudGrid>
+    </MudContainer>
+</div>
+
+@code {
+    public async Task SetSelectedPlan(int idPlan)
+    {
+        await PlanRepository.SetPlanLocalStorage(idPlan);
+        navigationManager.NavigateTo("/register", true);
+    }
+}
