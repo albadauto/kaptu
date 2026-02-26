@@ -1,7 +1,10 @@
 using Blazored.LocalStorage;
 using Kaptu.Web.Components;
+using Kaptu.Web.Helpers;
 using Kaptu.Web.Repository;
 using Kaptu.Web.Repository.Interface;
+using Kaptu.Web.Services;
+using Kaptu.Web.Services.Interface;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +15,12 @@ builder.Services.AddRazorComponents()
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<IPlanService, PlanService>();
-var app = builder.Build();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpContextAccessor();
 
+var app = builder.Build();
+var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
+AppSettingsHelper.Initialize(builder.Configuration, builder.Environment, httpContextAccessor);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

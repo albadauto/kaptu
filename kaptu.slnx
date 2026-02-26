@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/DLL/">
+    <Project Path="Kafka.Helper/Kaptu.Helper.csproj" Id="e4248650-5ca4-4192-a5eb-9b5c4e60e9cf" />
     <Project Path="Kaptu.DLL/Kaptu.DLL.csproj" />
   </Folder>
   <Folder Name="/Infra/">

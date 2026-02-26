@@ -8,5 +8,6 @@ namespace Kaptu.ApiService
         public SqlServerContext(DbContextOptions options) : base(options) { }
         public DbSet<Tenant> Tenant { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Otp> Otp { get; set; }
     }
 }

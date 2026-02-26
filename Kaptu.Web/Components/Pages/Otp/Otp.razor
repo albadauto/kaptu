@@ -1,0 +1,35 @@
+﻿@page "/otp"
+@inject IAuthService AuthService
+@rendermode InteractiveServer
+<div class="gradient-bg d-flex justify-center align-center" style="min-height:100vh;">
+    <MudPaper Elevation="12" Class="pa-8" Style="width:100%; max-width:450px; border-radius:20px;">
+
+        <MudText Typo="Typo.h5" Class="mb-6 text-center">
+            Verificação de E-mail
+        </MudText>
+
+        <MudForm @ref="form">
+            <MudTextField @bind-Value="_otpCode" Variant="Variant.Filled" Placeholder="000000" Label="Código de verificação"/>
+        </MudForm>
+        <MudGrid Class="mt-1" Justify="Justify.Center">
+            <MudItem><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="VerifyOtp">Enviar</MudButton></MudItem>
+        </MudGrid>
+    </MudPaper>
+</div>
+
+@code {
+    private MudForm form;
+    private long? _otpCode { get; set; }
+    private async Task VerifyOtp()
+    {
+        var isValidCode = await AuthService.VerifyOtpCode(_otpCode);
+        if (isValidCode)
+        {
+            Console.WriteLine("Código OTP válido!");
+        }
+        else
+        {
+            Snackbar.Add("Código OTP inválido. Por favor, tente novamente.", Severity.Error);
+        }
+    }
+}
