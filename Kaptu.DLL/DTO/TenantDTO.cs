@@ -17,7 +17,17 @@ namespace Kaptu.DLL.Models
         public DateTime? TrialsEnd { get; set; }
         [JsonPropertyName("isactive")]
         public bool IsActive { get; set; }
-        [JsonPropertyName("user")]
-        public User User { get; set; }
+
+        public static implicit operator TenantDTO(Tenant tenant)
+        {
+            return new TenantDTO
+            {
+                Id = tenant.Id,
+                Name = tenant.Name,
+                Plan = tenant.Plan,
+                TrialsEnd = tenant.TrialsEnd,
+                IsActive = tenant.IsActive,
+            };
+        }
     }
 }

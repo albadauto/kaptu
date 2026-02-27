@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Kaptu.DLL.DTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Kaptu.DLL.Models
 {
@@ -12,5 +14,17 @@ namespace Kaptu.DLL.Models
         public string Email { get; set; }
         public int TenantId { get; set; }
         public Tenant Tenant { get; set; }
+
+        public static implicit operator User(UserDTO userDTO)
+        {
+            return new User
+            {
+                Id = userDTO.Id,
+                Name = userDTO.Name,
+                Password = userDTO.Password,
+                Email = userDTO.Email,
+                TenantId = userDTO.TenantId,
+            };
+        }
     }
 }

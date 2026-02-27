@@ -81,7 +81,7 @@
         if (form.IsValid)
         {
             await AuthService.SendMailOtp(user.Email);
-            await AuthService.SetMailOtpLocalStorage(user.Email);
+            await AuthService.SetUserLocalStorage(user);
             navigationManager.NavigateTo("/otp");
         }
 
