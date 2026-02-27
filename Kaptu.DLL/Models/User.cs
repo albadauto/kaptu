@@ -12,7 +12,8 @@ namespace Kaptu.DLL.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public int TenantId { get; set; }
+        public int Plan { get; set; }
+        public string EnterpriseName { get; set; }
         public Tenant Tenant { get; set; }
 
         public static implicit operator User(UserDTO userDTO)
@@ -23,7 +24,6 @@ namespace Kaptu.DLL.Models
                 Name = userDTO.Name,
                 Password = userDTO.Password,
                 Email = userDTO.Email,
-                TenantId = userDTO.TenantId,
             };
         }
     }

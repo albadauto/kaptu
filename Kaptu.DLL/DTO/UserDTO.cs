@@ -16,10 +16,10 @@ namespace Kaptu.DLL.DTO
         public string Password { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        [JsonPropertyName("tenantname")]
-        public string TenantName { get; set; }
-        [JsonPropertyName("tenantid")]
-        public int TenantId { get; set; }
+        [JsonPropertyName("plan")]
+        public int Plan { get; set; }
+        [JsonPropertyName("enterprisename")]
+        public string EnterpriseName { get; set; }
 
         public static implicit operator UserDTO(Models.User user)
         {
@@ -29,8 +29,6 @@ namespace Kaptu.DLL.DTO
                 Name = user.Name,
                 Password = user.Password,
                 Email = user.Email,
-                TenantName = user.Tenant.Name,
-                TenantId = user.TenantId,
             };
         }
     }

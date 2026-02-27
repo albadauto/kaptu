@@ -1,18 +1,29 @@
 ﻿@page "/otp"
 @inject IAuthService AuthService
+@inject IUserService userService
 @rendermode InteractiveServer
 <div class="gradient-bg d-flex justify-center align-center" style="min-height:100vh;">
     <MudPaper Elevation="12" Class="pa-8" Style="width:100%; max-width:450px; border-radius:20px;">
-
         <MudText Typo="Typo.h5" Class="mb-6 text-center">
             Verificação de E-mail
         </MudText>
 
         <MudForm @ref="form">
-            <MudTextField @bind-Value="_otpCode" Variant="Variant.Filled" Placeholder="000000" Label="Código de verificação"/>
+            <MudTextField @bind-Value="_otpCode" Variant="Variant.Filled" Placeholder="000000" Label="Código de verificação" />
         </MudForm>
         <MudGrid Class="mt-1" Justify="Justify.Center">
-            <MudItem><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="VerifyOtp">Enviar</MudButton></MudItem>
+            <MudItem>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="VerifyOtp">
+                    @if (_isLoading)
+                    {
+                        <MudProgressCircular Indeterminate="true" Size="Size.Small" Color="Color.Inherit" />
+                    }
+                    else
+                    {
+                        <MudText>Salvar</MudText>
+                    }
+                </MudButton>
+            </MudItem>
         </MudGrid>
     </MudPaper>
 </div>
@@ -20,16 +31,27 @@
 @code {
     private MudForm form;
     private long? _otpCode { get; set; }
+    private bool _isLoading = false;
     private async Task VerifyOtp()
     {
+        _isLoading = true;
         var isValidCode = await AuthService.VerifyOtpCode(_otpCode);
         if (isValidCode)
         {
-            Console.WriteLine("Código OTP válido!");
+            var isCreated = await userService.AddUser();
+            if (isCreated)
+            {
+                Snackbar.Add("E-mail verificado com sucesso! Bem-vindo ao Kaptu.", Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add("Ocorreu um erro, por favor, tente novamente mais tarde", Severity.Error);
+            }
         }
         else
         {
             Snackbar.Add("Código OTP inválido. Por favor, tente novamente.", Severity.Error);
         }
+        _isLoading = false;
     }
 }

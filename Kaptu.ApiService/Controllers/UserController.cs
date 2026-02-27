@@ -1,4 +1,4 @@
-﻿using Kaptu.ApiService.Commands.Users;
+﻿using Kaptu.ApiService.Commands.Users.AddUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,15 +7,12 @@ namespace Kaptu.ApiService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IMediator mediator) : ControllerBase
     {
-        public IMediator _mediator;
-        public UserController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public IMediator _mediator = mediator;
 
         [HttpPost]
+        [Route("create-user")]
         public async Task<IActionResult> CreateUser([FromBody] AddUserCommand command)
         {
             try

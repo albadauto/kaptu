@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kaptu.ApiService.Queries.User
+namespace Kaptu.ApiService.Queries.User.GetUser
 {
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, List<UserDTO>>
     {
@@ -13,7 +13,7 @@ namespace Kaptu.ApiService.Queries.User
         }
         public async Task<List<UserDTO>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var result = await _context.User.Select(x => (UserDTO)x).ToListAsync();
+            var result = await _context.User.Select(x => (UserDTO)x).ToListAsync(cancellationToken: cancellationToken);
             return result;
         }
     }

@@ -4,13 +4,10 @@ using System.Threading.Tasks;
 
 namespace Kaptu.Web.Repository
 {
-    public class PlanService : IPlanService
+    public class PlanService(ILocalStorageService localStorageService) : IPlanService
     {
-        public ILocalStorageService _localStorageService { get; set; }
-        public PlanService(ILocalStorageService localStorageService)
-        {
-            _localStorageService = localStorageService;
-        }
+        public ILocalStorageService _localStorageService { get; set; } = localStorageService;
+
         public async Task SetPlanLocalStorage(int idPlan)
         {
             await _localStorageService.SetItemAsync<int>("planId", idPlan);

@@ -9,5 +9,13 @@ namespace Kaptu.ApiService
         public DbSet<Tenant> Tenant { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Otp> Otp { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Tenant>()
+                .HasOne(p => p.User)
+                .WithOne(p => p.Tenant)
+                .HasForeignKey<Tenant>(p => p.UserId);
+        }
     }
 }

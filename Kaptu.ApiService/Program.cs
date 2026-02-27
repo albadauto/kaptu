@@ -1,4 +1,5 @@
 using Kaptu.ApiService;
+using Kaptu.ApiService.Config;
 using Kaptu.ApiService.Repository;
 using Kaptu.ApiService.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddEntityFrameworkSqlServer().AddDbContext<SqlServerContext>(o => o.UseSqlServer(connectionString));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<Program>());
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile(new MappingConfig());
+    cfg.LicenseKey = Environment.GetEnvironmentVariable("MEDIATR_AUTOMAPPER_APIKEY");
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -15,7 +22,6 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.OpenApiSecurityScheme
