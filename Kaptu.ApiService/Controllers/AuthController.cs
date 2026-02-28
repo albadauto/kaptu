@@ -1,6 +1,9 @@
-﻿using Kaptu.ApiService.Repository.Interfaces;
+﻿using Kaptu.ApiService.Queries.Parameters.GetParameter;
+using Kaptu.ApiService.Repository.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Kaptu.ApiService.Controllers
 {
@@ -9,9 +12,11 @@ namespace Kaptu.ApiService.Controllers
     public class AuthController : ControllerBase
     {
         public readonly IAuthRepository _authRepository;
-        public AuthController(IAuthRepository authRepository)
+        public readonly IMediator _mediator;
+        public AuthController(IAuthRepository authRepository, IMediator mediator)
         {
             _authRepository = authRepository;
+            _mediator = mediator;
         }
 
         [HttpPost("send-otp")]
@@ -21,7 +26,8 @@ namespace Kaptu.ApiService.Controllers
             {
                 var code = new Random().Next(100000, 999999).ToString();
                 await _authRepository.AddOtp(email, code);
-                Kaptu.Helper.EmailHelper.SendMail(email, $"Your OTP code is: {code}", "Kaptu OTP Code");
+                var mail = await ConfigureEmailText(code);
+                Kaptu.Helper.EmailHelper.SendMail(email, mail, "Código Kaptu");
                 return Ok(new { Message = "OTP sent successfully" });
             }
             catch (Exception ex)
@@ -49,6 +55,14 @@ namespace Kaptu.ApiService.Controllers
             {
                 return StatusCode(500, new { Message = "An error occurred while verifying OTP", Details = ex.Message });
             }
+        }
+
+        private async Task<string> ConfigureEmailText(string code)
+        {
+            GetParameterQuery query = new("EMAIL_TEMPLATE_DEFAULT");
+            var result = await _mediator.Send(query);
+            return result.Value.Replace("{{TITULO_DA_MENSAGEM}}", "Código de ativação")
+                .Replace("{{MENSAGEM}}", $"Não compartilhe o código com ninguém! Seu código é: {code}");
         }
     }
 }

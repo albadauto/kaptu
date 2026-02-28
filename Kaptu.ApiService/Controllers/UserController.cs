@@ -1,4 +1,6 @@
 ﻿using Kaptu.ApiService.Commands.Users.AddUser;
+using Kaptu.ApiService.Queries.User.GetUser;
+using Kaptu.ApiService.Queries.User.GetUserByMail;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +25,25 @@ namespace Kaptu.ApiService.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = "An error occurred while creating user", Details = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("get-user-by-email")]
+        public async Task<IActionResult> GetUserByEmail([FromQuery] GetUserByMailQuery query)
+        {
+            try
+            {
+                var result = await _mediator.Send(query);
+                if (result.Email == null)
+                {
+                    return NotFound(new { Message = "User not found" });
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while retrieving user", Details = ex.Message });
             }
         }
     }

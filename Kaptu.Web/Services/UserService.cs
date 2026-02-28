@@ -22,8 +22,14 @@ namespace Kaptu.Web.Services
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync($"/api/User/create-user", content);
             return response.IsSuccessStatusCode;
+        }
 
-
+        public async Task<bool> IsUserExistsByMail(string email)
+        {
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
+            var response = await client.GetAsync($"/api/User/get-user-by-email?email={Uri.EscapeDataString(email)}");
+            return response.IsSuccessStatusCode;
         }
     }
 }

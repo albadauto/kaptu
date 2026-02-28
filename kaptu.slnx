@@ -9,5 +9,8 @@
   <Folder Name="/Services/">
     <Project Path="Kaptu.ApiService/Kaptu.ApiService.csproj" />
   </Folder>
+  <Folder Name="/SQL/">
+    <File Path="SQL/INSERT_PARAMETERS.sql" />
+  </Folder>
   <Project Path="Kaptu.Web/Kaptu.Web.csproj" />
 </Solution>

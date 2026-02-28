@@ -18,7 +18,7 @@ namespace Kaptu.Helper
                 From = new MailAddress("contact.qnext@gmail.com"),
                 Subject = subject,
                 Body = message,
-                IsBodyHtml = false
+                IsBodyHtml = true
             };
 
             mail.To.Add(mailToSend);

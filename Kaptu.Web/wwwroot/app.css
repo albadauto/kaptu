@@ -30,9 +30,8 @@ a, .btn-link {
 .gradient-bg {
     min-height: 100vh;
     margin: 0;
-    background: linear-gradient( 180deg, #3a29a6 0%, #5b4bd6 50%, #1f165e 100% );
+    background: linear-gradient( 135deg, #1a1446 0%, #3f2dbb 35%, #6c5ce7 65%, #1a1446 100% );
 }
-
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
