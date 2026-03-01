@@ -4,6 +4,7 @@ using Kaptu.ApiService.Repository;
 using Kaptu.ApiService.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -20,6 +21,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+StripeConfiguration.ApiKey = builder.Configuration["StripeApiKey"];
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddSwaggerGen(c =>

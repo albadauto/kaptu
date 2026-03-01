@@ -1,5 +1,8 @@
-﻿using Kaptu.ApiService.Queries.Parameters.GetParameter;
+﻿using Kaptu.ApiService.Config;
+using Kaptu.ApiService.Queries.Parameters.GetParameter;
+using Kaptu.ApiService.Queries.User.GetUserByMail;
 using Kaptu.ApiService.Repository.Interfaces;
+using Kaptu.DLL.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +57,36 @@ namespace Kaptu.ApiService.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = "An error occurred while verifying OTP", Details = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] GetUserByEmailPasswordQuery query)
+        {
+            try
+            {
+                var user = await _mediator.Send(query);
+                if (user.Email != null)
+                {
+                   if(BCrypt.Net.BCrypt.Verify(query.Password, user.Password))
+                    {
+                        var token = JwtConfig.GenerateToken(user);
+                        return Ok(token);
+                    }
+                    else
+                    {
+                        return BadRequest(new { Message = "Invalid credentials" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { Message = "Invalid credentials" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred during authentication", Details = ex.Message });
             }
         }
 

@@ -8,7 +8,6 @@ namespace Kaptu.DLL.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Plan { get; set; }
         public DateTime? TrialsEnd { get; set; }
         public bool IsActive { get; set; }
         public int UserId{ get; set; }
@@ -20,7 +19,6 @@ namespace Kaptu.DLL.Models
             {
                 Id = tenantDTO.Id,
                 Name = tenantDTO.Name,
-                Plan = tenantDTO.Plan,
                 TrialsEnd = tenantDTO.TrialsEnd,
                 IsActive = tenantDTO.IsActive,
             };

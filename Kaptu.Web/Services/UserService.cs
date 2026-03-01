@@ -1,35 +1,59 @@
 ﻿using Blazored.LocalStorage;
 using Kaptu.DLL.DTO;
-using Kaptu.DLL.Models;
 using Kaptu.Web.Services.Interface;
-using System.Text;
+using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace Kaptu.Web.Services
+namespace Kaptu.Web.Services;
+
+public class UserService : IUserService
 {
-    public class UserService(ILocalStorageService localStorageService) : IUserService
+    private readonly HttpClient _http;
+    private readonly ILocalStorageService _localStorage;
+
+    public UserService(
+        HttpClient httpClient,
+        ILocalStorageService localStorageService)
     {
-        public ILocalStorageService _localStorageService { get; set; } = localStorageService;
-        public async Task<bool> AddUser()
-        {
-            var userLocalStorage = await _localStorageService.GetItemAsync<string>("userToRegister");
-            var dto = JsonSerializer.Deserialize<UserDTO>(userLocalStorage!);
-            dto!.Plan = await _localStorageService.GetItemAsync<int>("planId");
+        _http = httpClient;
+        _localStorage = localStorageService;
 
-            using var client = new HttpClient();
-            client.BaseAddress = new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
-            var json = JsonSerializer.Serialize(dto);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"/api/User/create-user", content);
-            return response.IsSuccessStatusCode;
-        }
+        _http.BaseAddress =
+            new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
+    }
 
-        public async Task<bool> IsUserExistsByMail(string email)
-        {
-            using var client = new HttpClient();
-            client.BaseAddress = new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
-            var response = await client.GetAsync($"/api/User/get-user-by-email?email={Uri.EscapeDataString(email)}");
-            return response.IsSuccessStatusCode;
-        }
+    public async Task<bool> AddUser()
+    {
+        var userJson =
+            await _localStorage.GetItemAsync<string>("userToRegister");
+
+        if (string.IsNullOrWhiteSpace(userJson))
+            return false;
+
+        var dto = JsonSerializer.Deserialize<UserDTO>(userJson);
+
+        if (dto is null)
+            return false;
+
+        var planId =
+            await _localStorage.GetItemAsync<int>("planId");
+
+        dto.Plan = planId;
+
+        var response =
+            await _http.PostAsJsonAsync("/api/User/create-user", dto);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> IsUserExistsByMail(string email)
+    {
+        var response = await _http.GetAsync(
+            $"/api/User/get-user-by-email?email={Uri.EscapeDataString(email)}");
+
+        if (!response.IsSuccessStatusCode)
+            return false;
+
+        return true;
     }
 }

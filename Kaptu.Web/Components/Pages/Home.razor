@@ -1,4 +1,6 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@inject IAuthService AuthService
 @using MudBlazor
 
 <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center" Style="min-height:100vh;">
@@ -15,32 +17,39 @@
             </MudText>
 
             <MudDivider />
+            <MudForm @ref="form">
+                <MudTextField Label="Email"
+                              Variant="Variant.Outlined"
+                              StartIcon="Icons.Material.Filled.Email"
+                              Required="true"
+                              @bind-Value="dto.Email" />
 
-            <MudTextField Label="Email"
-                          Variant="Variant.Outlined"
-                          StartIcon="Icons.Material.Filled.Email"
-                          Required="true"
-                          @bind-Value="Email" />
+                <MudTextField Label="Senha"
+                              Variant="Variant.Outlined"
+                              StartIcon="Icons.Material.Filled.Lock"
+                              InputType="InputType.Password"
+                              Required="true"
+                              @bind-Value="dto.Password" />
 
-            <MudTextField Label="Senha"
-                          Variant="Variant.Outlined"
-                          StartIcon="Icons.Material.Filled.Lock"
-                          InputType="InputType.Password"
-                          Required="true"
-                          @bind-Value="Password" />
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                    <MudLink Href="/forgotpassword">Esqueceu a senha?</MudLink>
+                </MudStack>
 
-            <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
-                <MudLink Href="/forgotpassword">Esqueceu a senha?</MudLink>
-            </MudStack>
-
-            <MudButton Variant="Variant.Filled"
-                       Color="Color.Primary"
-                       Size="Size.Large"
-                       FullWidth="true"
-                       OnClick="OnLogin">
-                Entrar
-            </MudButton>
-
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           Size="Size.Large"
+                           FullWidth="true"
+                           OnClick="OnLogin">
+                    @if (_isLoading)
+                    {
+                        <MudProgressCircular Indeterminate="true" Size="Size.Small" Color="Color.Inherit" />
+                    }
+                    else
+                    {
+                        <MudText>Salvar</MudText>
+                    }
+                </MudButton>
+            </MudForm>
             <MudDivider />
 
             <MudText Typo="Typo.body2" Align="Align.Center">
@@ -53,14 +62,38 @@
 </MudContainer>
 
 @code {
-    private string Email { get; set; }
-    private string Password { get; set; }
+    private LoginDTO dto { get; set; } = new();
+    private MudForm form;
     private bool RememberMe;
+    private bool _isLoading = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await AuthService.Logout();
+            StateHasChanged(); 
+
+        }
+    }
 
     private async Task OnLogin()
     {
-        // TODO: integrar autenticação
-        await Task.Delay(500);
+        _isLoading = true;
+        if (form.IsValid)
+        {
+            var result = await AuthService.Authenticate(dto);
+            if (result)
+            {
+                Snackbar.Add("Login realizado com sucesso!", Severity.Success);
+                navigationManager.NavigateTo("/dashboard");
+            }
+            else
+            {
+                Snackbar.Add("Falha no login. Verifique suas credenciais.", Severity.Error);
+            }
+        }
+        _isLoading = false;
     }
 }
 

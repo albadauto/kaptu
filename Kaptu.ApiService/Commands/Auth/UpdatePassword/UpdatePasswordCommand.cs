@@ -1,6 +1,8 @@
-﻿namespace Kaptu.ApiService.Commands.Auth.UpdatePassword
+﻿using MediatR;
+
+namespace Kaptu.ApiService.Commands.Auth.UpdatePassword
 {
-    public class UpdatePasswordCommand
+    public record UpdatePasswordCommand(string Email, string NewPassword) : IRequest<bool>
     {
     }
 }

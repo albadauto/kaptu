@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
     <ReconnectModal @rendermode="new InteractiveServerRenderMode(prerender: false)" />
     <script src="@Assets["_framework/blazor.web.js"]"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />

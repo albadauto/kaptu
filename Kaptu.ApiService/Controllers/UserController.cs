@@ -1,4 +1,5 @@
-﻿using Kaptu.ApiService.Commands.Users.AddUser;
+﻿using Kaptu.ApiService.Commands.Auth.UpdatePassword;
+using Kaptu.ApiService.Commands.Users.AddUser;
 using Kaptu.ApiService.Queries.User.GetUser;
 using Kaptu.ApiService.Queries.User.GetUserByMail;
 using MediatR;
@@ -44,6 +45,28 @@ namespace Kaptu.ApiService.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = "An error occurred while retrieving user", Details = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordCommand command)
+        {
+            try
+            {
+                var result = await _mediator.Send(command);
+                if (result)
+                {
+                    return Ok(new { Message = "Password updated successfully" });
+                }
+                else
+                {
+                    return BadRequest(new { Message = "Failed to update password" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred while updating password", Details = ex.Message });
             }
         }
     }

@@ -5,8 +5,9 @@ using Kaptu.Web.Repository;
 using Kaptu.Web.Repository.Interface;
 using Kaptu.Web.Services;
 using Kaptu.Web.Services.Interface;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
-
+using Kaptu.Web.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,6 +19,10 @@ builder.Services.AddScoped<IPlanService, PlanService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClientCustom();
+builder.Services.AddScoped<CustomAuthenticationProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(c => c.GetRequiredService<CustomAuthenticationProvider>());
+
 
 var app = builder.Build();
 var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();

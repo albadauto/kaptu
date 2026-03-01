@@ -13,8 +13,10 @@ namespace Kaptu.DLL.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public int Plan { get; set; }
+        public bool IsPremium { get; set; }
         public string EnterpriseName { get; set; }
         public Tenant Tenant { get; set; }
+        public PremiumUsers PremiumUsers { get; set; }
 
         public static implicit operator User(UserDTO userDTO)
         {

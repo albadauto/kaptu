@@ -16,6 +16,11 @@ namespace Kaptu.ApiService
                 .HasOne(p => p.User)
                 .WithOne(p => p.Tenant)
                 .HasForeignKey<Tenant>(p => p.UserId);
+
+            modelBuilder.Entity<PremiumUsers>()
+                .HasOne(p => p.User)
+                .WithOne(p => p.PremiumUsers)
+                .HasForeignKey<PremiumUsers>(p => p.UserId);
         }
     }
 }
