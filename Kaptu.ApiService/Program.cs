@@ -4,6 +4,7 @@ using Kaptu.ApiService.Repository;
 using Kaptu.ApiService.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using StackExchange.Redis;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,19 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 StripeConfiguration.ApiKey = builder.Configuration["StripeApiKey"];
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var configuration = "localhost:6379"; 
+    return ConnectionMultiplexer.Connect(configuration);
+});
+
+// REGISTRA IDatabase
+builder.Services.AddScoped(sp =>
+{
+    var multiplexer = sp.GetRequiredService<IConnectionMultiplexer>();
+    return multiplexer.GetDatabase();
+});
+
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddSwaggerGen(c =>
 {

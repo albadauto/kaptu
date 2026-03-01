@@ -16,7 +16,6 @@ namespace Kaptu.ApiService.Queries.User.GetUserByMail
                 Name = u.Name,
                 Password = u.Password,
                 Email = u.Email,
-                Plan = u.Plan,
                 EnterpriseName = u.EnterpriseName
             }).FirstOrDefaultAsync(cancellationToken) ?? new();
         }

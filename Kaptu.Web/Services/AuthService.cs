@@ -26,7 +26,6 @@ namespace Kaptu.Web.Services
                 new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
         }
 
-
         public async Task<bool> SendMailOtp(string mail)
         {
             var response = await _http.PostAsync(
@@ -105,7 +104,6 @@ namespace Kaptu.Web.Services
             await _localStorage.RemoveItemAsync("authToken");
             await _authProvider.MarkUserAsLoggedOut();
         }
-
 
         public async Task SetUserLocalStorage(UserDTO dto)
         {

@@ -16,8 +16,8 @@ namespace Kaptu.DLL.DTO
         public string Password { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        [JsonPropertyName("plan")]
-        public int Plan { get; set; }
+        [JsonPropertyName("planid")]
+        public int PlanId { get; set; }
         [JsonPropertyName("enterprisename")]
         public string EnterpriseName { get; set; }
 

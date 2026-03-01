@@ -4,6 +4,7 @@ using Kaptu.ApiService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kaptu.ApiService.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20260301211439_PremiumUsersLast")]
+    partial class PremiumUsersLast
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,30 +52,6 @@ namespace Kaptu.ApiService.Migrations
                     b.ToTable("Otp");
                 });
 
-            modelBuilder.Entity("Kaptu.DLL.Models.Plans", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<string>("StripePriceId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Plans");
-                });
-
             modelBuilder.Entity("Kaptu.DLL.Models.PremiumUsers", b =>
                 {
                     b.Property<int>("Id")
@@ -102,32 +81,6 @@ namespace Kaptu.ApiService.Migrations
                         .IsUnique();
 
                     b.ToTable("PremiumUsers");
-                });
-
-            modelBuilder.Entity("Kaptu.DLL.Models.PurchaseHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PlanId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PurchaseHistory");
                 });
 
             modelBuilder.Entity("Kaptu.DLL.Models.Tenant", b =>
@@ -175,6 +128,9 @@ namespace Kaptu.ApiService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPremium")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -183,13 +139,10 @@ namespace Kaptu.ApiService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlanId")
+                    b.Property<int>("Plan")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanId")
-                        .IsUnique();
 
                     b.ToTable("User");
                 });
@@ -201,25 +154,6 @@ namespace Kaptu.ApiService.Migrations
                         .HasForeignKey("Kaptu.DLL.Models.PremiumUsers", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Kaptu.DLL.Models.PurchaseHistory", b =>
-                {
-                    b.HasOne("Kaptu.DLL.Models.Plans", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Kaptu.DLL.Models.User", "User")
-                        .WithMany("PurchaseHistory")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Plan");
 
                     b.Navigation("User");
                 });
@@ -237,27 +171,8 @@ namespace Kaptu.ApiService.Migrations
 
             modelBuilder.Entity("Kaptu.DLL.Models.User", b =>
                 {
-                    b.HasOne("Kaptu.DLL.Models.Plans", "Plans")
-                        .WithOne("User")
-                        .HasForeignKey("Kaptu.DLL.Models.User", "PlanId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Plans");
-                });
-
-            modelBuilder.Entity("Kaptu.DLL.Models.Plans", b =>
-                {
-                    b.Navigation("User")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Kaptu.DLL.Models.User", b =>
-                {
                     b.Navigation("PremiumUsers")
                         .IsRequired();
-
-                    b.Navigation("PurchaseHistory");
 
                     b.Navigation("Tenant")
                         .IsRequired();

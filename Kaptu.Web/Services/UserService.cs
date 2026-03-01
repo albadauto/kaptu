@@ -38,7 +38,7 @@ public class UserService : IUserService
         var planId =
             await _localStorage.GetItemAsync<int>("planId");
 
-        dto.Plan = planId;
+        dto.PlanId = planId;
 
         var response =
             await _http.PostAsJsonAsync("/api/User/create-user", dto);

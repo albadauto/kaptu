@@ -33,7 +33,7 @@ namespace Kaptu.Web.Extensions
         public async Task MarkUserAsAuthenticated(LoginDTO dto)
         {
             await _localStorage.SetAsync("authToken", dto.Token);
-            await _localStorage.SetAsync("IdUsuario", dto.UserId);
+            await _localStorage.SetAsync("UserId", dto.UserId);
             var identity = new System.Security.Claims.ClaimsIdentity(new[]
             {
                 new System.Security.Claims.Claim("AuthToken", dto.Token)
