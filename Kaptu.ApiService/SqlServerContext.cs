@@ -25,6 +25,11 @@ namespace Kaptu.ApiService
                .WithOne(p => p.PremiumUsers)
                .HasForeignKey<PremiumUsers>(p => p.UserId);
 
+            modelBuilder.Entity<PremiumUsers>()
+              .HasOne(p => p.Plans)
+              .WithMany(p => p.PremiumUsers)
+              .HasForeignKey(p => p.PlanId);
+
             modelBuilder.Entity<PurchaseHistory>()
                .HasOne(p => p.User)
                .WithMany(p => p.PurchaseHistory)
@@ -32,8 +37,8 @@ namespace Kaptu.ApiService
 
             modelBuilder.Entity<User>()
                .HasOne(p => p.Plans)
-               .WithOne(p => p.User)
-               .HasForeignKey<User>(p => p.PlanId)
+               .WithMany(p => p.User)
+               .HasForeignKey(p => p.PlanId)
                .OnDelete(DeleteBehavior.NoAction);
         }
     }

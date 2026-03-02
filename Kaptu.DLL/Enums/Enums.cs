@@ -14,4 +14,15 @@ namespace Kaptu.DLL.Enums
         [Description("price_1T6BefC6gzfmqJLeLrmK8cTM")]
         Imobiliaria= 2
     }
+
+    public enum PurchaseStatus
+    {
+        [Description("pending")]
+        Pending = 0,
+        [Description("completed")]
+        Completed = 1,
+        [Description("failed")]
+        Failed = 2
+
+    }
 }

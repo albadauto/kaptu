@@ -4,6 +4,7 @@ using Kaptu.ApiService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kaptu.ApiService.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20260302022052_Relacao_Premium_Plans")]
+    partial class Relacao_Premium_Plans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -4,6 +4,7 @@ using Kaptu.ApiService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kaptu.ApiService.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    partial class SqlServerContextModelSnapshot : ModelSnapshot
+    [Migration("20260302020251_AjusteRelacionamentoPlansUsers")]
+    partial class AjusteRelacionamentoPlansUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,15 +93,13 @@ namespace Kaptu.ApiService.Migrations
                     b.Property<DateTime>("NextPayment")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PlanId")
+                    b.Property<int>("Plan")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -197,19 +198,11 @@ namespace Kaptu.ApiService.Migrations
 
             modelBuilder.Entity("Kaptu.DLL.Models.PremiumUsers", b =>
                 {
-                    b.HasOne("Kaptu.DLL.Models.Plans", "Plans")
-                        .WithMany("PremiumUsers")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Kaptu.DLL.Models.User", "User")
                         .WithOne("PremiumUsers")
                         .HasForeignKey("Kaptu.DLL.Models.PremiumUsers", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Plans");
 
                     b.Navigation("User");
                 });
@@ -257,8 +250,6 @@ namespace Kaptu.ApiService.Migrations
 
             modelBuilder.Entity("Kaptu.DLL.Models.Plans", b =>
                 {
-                    b.Navigation("PremiumUsers");
-
                     b.Navigation("User");
                 });
 

@@ -8,7 +8,8 @@ namespace Kaptu.DLL.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int Plan { get; set; }
+        public int PlanId { get; set; }
+        public Plans Plans { get; set; }
         public User User { get; set; }
         public DateTime NextPayment { get; set; }
         public DateTime LastPayment { get; set;  }

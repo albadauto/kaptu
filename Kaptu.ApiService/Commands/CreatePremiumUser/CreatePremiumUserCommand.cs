@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Kaptu.ApiService.Commands.CreatePremiumUser
 {
-    public record CreatePremiumUserCommand(int Id, int UserId, int Plan ,
+    public record CreatePremiumUserCommand(int Id, int UserId, int PlanId ,
         DateTime NextPayment,DateTime LastPayment,bool IsActive ) : IRequest{
     }
 }
