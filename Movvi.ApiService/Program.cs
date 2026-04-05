@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using Movvi.ApiService;
 using Movvi.ApiService.Config;
 using Movvi.ApiService.Repository;
 using Movvi.ApiService.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi;
 using StackExchange.Redis;
 using Stripe;
 
@@ -56,6 +57,9 @@ builder.Services.AddSwaggerGen(c =>
         [new OpenApiSecuritySchemeReference("bearer", document)] = []
     });
 });
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/keys"))
+    .SetApplicationName("movvi-app");
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
