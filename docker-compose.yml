@@ -1,66 +1,66 @@
-services:
-  movvi-sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: movvi-sqlserver
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "StrongPassword!123"
-      MSSQL_PID: "Developer"
-    ports:
-      - "1433:1433"
-    volumes:
-      - sqlserver-data:/var/opt/mssql
-    networks:
-      - movvi-network
+  services:
+    movvi-sqlserver:
+      image: mcr.microsoft.com/mssql/server:2022-latest
+      container_name: movvi-sqlserver
+      environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "StrongPassword!123"
+        MSSQL_PID: "Developer"
+      ports:
+        - "1433:1433"
+      volumes:
+        - sqlserver-data:/var/opt/mssql
+      networks:
+        - movvi-network
 
-  movvi-api:
-    container_name: movvi-api
-    build:
-      context: .
-      dockerfile: Movvi.ApiService/Dockerfile
-    ports:
-      - "5001:8080"
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:8080
+    movvi-api:
+      container_name: movvi-api
+      build:
+        context: .
+        dockerfile: Movvi.ApiService/Dockerfile
+      ports:
+        - "5001:8080"
+      environment:
+        ASPNETCORE_ENVIRONMENT: Development
+        ASPNETCORE_URLS: http://+:8080
 
-      ConnectionStrings__DefaultConnection: >
-        Server=Movvi-sqlserver,1433;
-        Database=MovviDb;
-        User Id=sa;
-        Password=StrongPassword!123;
-        TrustServerCertificate=True;
-    depends_on:
-      - movvi-sqlserver
-    networks:
-      - movvi-network
+        ConnectionStrings__DefaultConnection: >
+          Server=Movvi-sqlserver,1433;
+          Database=MovviDb;
+          User Id=sa;
+          Password=StrongPassword!123;
+          TrustServerCertificate=True;
+      depends_on:
+        - movvi-sqlserver
+      networks:
+        - movvi-network
 
-  movvi-web:
-    container_name: movvi-web
-    build:
-      context: .
-      dockerfile: Movvi.Web/Dockerfile
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:8080
-      Api__BaseUrl: http://Movvi-api:8080
-    volumes:
-        - dataprotection-keys:/keys
-    depends_on:
-      - movvi-api
-    networks:
-      - movvi-network
+    movvi-web:
+      container_name: movvi-web
+      build:
+        context: .
+        dockerfile: Movvi.Web/Dockerfile
+      environment:
+        ASPNETCORE_ENVIRONMENT: Development
+        ASPNETCORE_URLS: http://+:8080
+        Api__BaseUrl: http://Movvi-api:8080
+      volumes:
+          - dataprotection-keys:/keys
+      depends_on:
+        - movvi-api
+      networks:
+        - movvi-network
 
-  redis:
-    image: redis:7
-    container_name: redis
-    ports:
-      - "6379:6379"
+    redis:
+      image: redis:7
+      container_name: redis
+      ports:
+        - "6379:6379"
 
-networks:
-  movvi-network:
-    driver: bridge
+  networks:
+    movvi-network:
+      driver: bridge
 
-volumes:
-  sqlserver-data:
-  dataprotection-keys:
+  volumes:
+    sqlserver-data:
+    dataprotection-keys:
