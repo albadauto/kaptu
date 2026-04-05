@@ -44,6 +44,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
       Api__BaseUrl: http://Movvi-api:8080
+    volumes:
+        - dataprotection-keys:/keys
     depends_on:
       - movvi-api
     networks:
@@ -61,3 +63,4 @@ networks:
 
 volumes:
   sqlserver-data:
+  dataprotection-keys:
