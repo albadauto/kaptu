@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/DLL/">
+    <Project Path="Movvi.DLL/Movvi.DLL.csproj" />
+    <Project Path="Movvi.Helper/Movvi.Helper.csproj" />
+  </Folder>
+  <Folder Name="/Infra/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="Movvi.ApiService/Movvi.ApiService.csproj" />
+  </Folder>
+  <Folder Name="/SQL/">
+    <File Path="SQL/INSERT_PARAMETERS.sql" />
+    <File Path="SQL/INSERT_PLANS.sql" />
+  </Folder>
+  <Project Path="Movvi.Web/Movvi.Web.csproj" />
+</Solution>

@@ -1,4 +1,4 @@
-USE KAPTU
+USE Movvi
 GO
 
 /* ================================
@@ -39,7 +39,7 @@ VALUES (
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email Kaptu</title>
+<title>Email Movvi</title>
 </head>
 
 <body style="margin:0;padding:0;background-color:#f4f6fb;font-family:Arial,Helvetica,sans-serif;">
@@ -56,12 +56,12 @@ style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box
 style="background:linear-gradient(135deg,#2e1f92,#4b3fcf);padding:30px;">
 
 <img src="https://i.postimg.cc/9MX3GdV0/logo-white.png"
-alt="Kaptu Logo"
+alt="Movvi Logo"
 width="180"
 style="display:block;margin-bottom:15px">
 
 <h1 style="color:#ffffff;margin:0;font-size:24px;font-weight:600;">
-Comunicação Kaptu
+Comunicação Movvi
 </h1>
 
 </td>
@@ -92,7 +92,7 @@ Comunicação Kaptu
 <tr>
 <td align="center" style="padding:25px;color:#777777;font-size:13px;">
 <p style="margin:0;">
-© 2026 Kaptu • Todos os direitos reservados
+© 2026 Movvi • Todos os direitos reservados
 </p>
 </td>
 </tr>

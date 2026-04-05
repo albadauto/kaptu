@@ -1,7 +1,7 @@
 services:
-  kaptu-sqlserver:
+  Movvi-sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: kaptu-sqlserver
+    container_name: Movvi-sqlserver
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "StrongPassword!123"
@@ -11,46 +11,45 @@ services:
     volumes:
       - sqlserver-data:/var/opt/mssql
     networks:
-      - kaptu-network
+      - Movvi-network
 
-  kaptu-api:
-    container_name: kaptu-api
+  Movvi-api:
+    container_name: Movvi-api
     build:
       context: .
-      dockerfile: Kaptu.ApiService/Dockerfile
+      dockerfile: Movvi.ApiService/Dockerfile
     ports:
       - "5001:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
 
-      # Connection String da API
       ConnectionStrings__DefaultConnection: >
-        Server=kaptu-sqlserver,1433;
-        Database=KaptuDb;
+        Server=Movvi-sqlserver,1433;
+        Database=MovviDb;
         User Id=sa;
         Password=StrongPassword!123;
         TrustServerCertificate=True;
     depends_on:
-      - kaptu-sqlserver
+      - Movvi-sqlserver
     networks:
-      - kaptu-network
+      - Movvi-network
 
-  kaptu-web:
-    container_name: kaptu-web
+  Movvi-web:
+    container_name: Movvi-web
     build:
       context: .
-      dockerfile: Kaptu.Web/Dockerfile
+      dockerfile: Movvi.Web/Dockerfile
     ports:
       - "5000:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
-      Api__BaseUrl: http://kaptu-api:8080
+      Api__BaseUrl: http://Movvi-api:8080
     depends_on:
-      - kaptu-api
+      - Movvi-api
     networks:
-      - kaptu-network
+      - Movvi-network
 
   redis:
     image: redis:7
@@ -59,7 +58,7 @@ services:
       - "6379:6379"
 
 networks:
-  kaptu-network:
+  Movvi-network:
     driver: bridge
 
 volumes:

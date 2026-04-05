@@ -1,0 +1,53 @@
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MEDIATR_AUTOMAPPER_APIKEY": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ikx1Y2t5UGVubnlTb2Z0d2FyZUxpY2Vuc2VLZXkvYmJiMTNhY2I1OTkwNGQ4OWI0Y2IxYzg1ZjA4OGNjZjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x1Y2t5cGVubnlzb2Z0d2FyZS5jb20iLCJhdWQiOiJMdWNreVBlbm55U29mdHdhcmUiLCJleHAiOiIxODA2ODgzMjAwIiwiaWF0IjoiMTc3NTM2MTI4OSIsImFjY291bnRfaWQiOiIwMTljOWYxMTczMWY3Nzk5YWViZWFiNjBmMWJhOGY2ZCIsImN1c3RvbWVyX2lkIjoiY3RtXzAxa2pmaDQ3eHcybnc3N3BkbWd0N3J0MHhqIiwic3ViX2lkIjoiLSIsImVkaXRpb24iOiIwIiwidHlwZSI6IjIifQ.hAv4RUwhp2Up5MJpVx8wenmku1ecg2zw8NRC9yNXFxPkfGK45FaeyyEdtysuIoCILKDBkTeDtnO9NunvwIiPMiaMaIp7M9RmIohw6iMmLgyjVN7OgXtxe0wuAKZzDiotK_uXOh2N_UWrHMNEqgZGArbkTqaDfXh71rU7s7JKkZcLV-VqoBbXgQtqdQ4COaRQnWQ1KfIuF2e-e9vf-RwVxDS4CU3wOkYTg6jg476h5WiqPyaGvRhqjxAz0UNlDQY5PuWOTsznoxx_72a6r8k1puOkr2gb4ueNEz04BNpZu_d8c5NH-jX1mFdvqKbAQ8c3B10aC8mFuj8qyRa_y1X_-w"
+
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5036"
+    },
+    "https": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MEDIATR_AUTOMAPPER_APIKEY": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ikx1Y2t5UGVubnlTb2Z0d2FyZUxpY2Vuc2VLZXkvYmJiMTNhY2I1OTkwNGQ4OWI0Y2IxYzg1ZjA4OGNjZjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x1Y2t5cGVubnlzb2Z0d2FyZS5jb20iLCJhdWQiOiJMdWNreVBlbm55U29mdHdhcmUiLCJleHAiOiIxODA2ODgzMjAwIiwiaWF0IjoiMTc3NTM2MTI4OSIsImFjY291bnRfaWQiOiIwMTljOWYxMTczMWY3Nzk5YWViZWFiNjBmMWJhOGY2ZCIsImN1c3RvbWVyX2lkIjoiY3RtXzAxa2pmaDQ3eHcybnc3N3BkbWd0N3J0MHhqIiwic3ViX2lkIjoiLSIsImVkaXRpb24iOiIwIiwidHlwZSI6IjIifQ.hAv4RUwhp2Up5MJpVx8wenmku1ecg2zw8NRC9yNXFxPkfGK45FaeyyEdtysuIoCILKDBkTeDtnO9NunvwIiPMiaMaIp7M9RmIohw6iMmLgyjVN7OgXtxe0wuAKZzDiotK_uXOh2N_UWrHMNEqgZGArbkTqaDfXh71rU7s7JKkZcLV-VqoBbXgQtqdQ4COaRQnWQ1KfIuF2e-e9vf-RwVxDS4CU3wOkYTg6jg476h5WiqPyaGvRhqjxAz0UNlDQY5PuWOTsznoxx_72a6r8k1puOkr2gb4ueNEz04BNpZu_d8c5NH-jX1mFdvqKbAQ8c3B10aC8mFuj8qyRa_y1X_-w"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7026;http://localhost:5036"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "MEDIATR_AUTOMAPPER_APIKEY": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ikx1Y2t5UGVubnlTb2Z0d2FyZUxpY2Vuc2VLZXkvYmJiMTNhY2I1OTkwNGQ4OWI0Y2IxYzg1ZjA4OGNjZjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x1Y2t5cGVubnlzb2Z0d2FyZS5jb20iLCJhdWQiOiJMdWNreVBlbm55U29mdHdhcmUiLCJleHAiOiIxODA2ODgzMjAwIiwiaWF0IjoiMTc3NTM2MTI4OSIsImFjY291bnRfaWQiOiIwMTljOWYxMTczMWY3Nzk5YWViZWFiNjBmMWJhOGY2ZCIsImN1c3RvbWVyX2lkIjoiY3RtXzAxa2pmaDQ3eHcybnc3N3BkbWd0N3J0MHhqIiwic3ViX2lkIjoiLSIsImVkaXRpb24iOiIwIiwidHlwZSI6IjIifQ.hAv4RUwhp2Up5MJpVx8wenmku1ecg2zw8NRC9yNXFxPkfGK45FaeyyEdtysuIoCILKDBkTeDtnO9NunvwIiPMiaMaIp7M9RmIohw6iMmLgyjVN7OgXtxe0wuAKZzDiotK_uXOh2N_UWrHMNEqgZGArbkTqaDfXh71rU7s7JKkZcLV-VqoBbXgQtqdQ4COaRQnWQ1KfIuF2e-e9vf-RwVxDS4CU3wOkYTg6jg476h5WiqPyaGvRhqjxAz0UNlDQY5PuWOTsznoxx_72a6r8k1puOkr2gb4ueNEz04BNpZu_d8c5NH-jX1mFdvqKbAQ8c3B10aC8mFuj8qyRa_y1X_-w"
+
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MEDIATR_AUTOMAPPER_APIKEY": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ikx1Y2t5UGVubnlTb2Z0d2FyZUxpY2Vuc2VLZXkvYmJiMTNhY2I1OTkwNGQ4OWI0Y2IxYzg1ZjA4OGNjZjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x1Y2t5cGVubnlzb2Z0d2FyZS5jb20iLCJhdWQiOiJMdWNreVBlbm55U29mdHdhcmUiLCJleHAiOiIxODA2ODgzMjAwIiwiaWF0IjoiMTc3NTM2MTI4OSIsImFjY291bnRfaWQiOiIwMTljOWYxMTczMWY3Nzk5YWViZWFiNjBmMWJhOGY2ZCIsImN1c3RvbWVyX2lkIjoiY3RtXzAxa2pmaDQ3eHcybnc3N3BkbWd0N3J0MHhqIiwic3ViX2lkIjoiLSIsImVkaXRpb24iOiIwIiwidHlwZSI6IjIifQ.hAv4RUwhp2Up5MJpVx8wenmku1ecg2zw8NRC9yNXFxPkfGK45FaeyyEdtysuIoCILKDBkTeDtnO9NunvwIiPMiaMaIp7M9RmIohw6iMmLgyjVN7OgXtxe0wuAKZzDiotK_uXOh2N_UWrHMNEqgZGArbkTqaDfXh71rU7s7JKkZcLV-VqoBbXgQtqdQ4COaRQnWQ1KfIuF2e-e9vf-RwVxDS4CU3wOkYTg6jg476h5WiqPyaGvRhqjxAz0UNlDQY5PuWOTsznoxx_72a6r8k1puOkr2gb4ueNEz04BNpZu_d8c5NH-jX1mFdvqKbAQ8c3B10aC8mFuj8qyRa_y1X_-w"
+
+      }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:55462/",
+      "sslPort": 44387
+    }
+  }
+}
