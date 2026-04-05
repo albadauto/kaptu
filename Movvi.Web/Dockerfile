@@ -6,7 +6,7 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-
+RUN useradd -m appuser
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -26,4 +26,4 @@ RUN dotnet publish "./Movvi.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Movvi.Web.dll"]
+ENTRYPOINT ["sh", "-c", "chown -R appuser:appuser /keys && exec dotnet Movvi.Web.dll"]
