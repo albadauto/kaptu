@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Movvi.ApiService\Movvi.ApiService.csproj" />
     <ProjectReference Include="..\Movvi.DLL\Movvi.DLL.csproj" />
     <ProjectReference Include="..\Movvi.Helper\Movvi.Helper.csproj" />
   </ItemGroup>
