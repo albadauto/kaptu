@@ -11,10 +11,10 @@ services:
     volumes:
       - sqlserver-data:/var/opt/mssql
     networks:
-      - Movvi-network
+      - movvi-network
 
   Movvi-api:
-    container_name: Movvi-api
+    container_name: movvi-api
     build:
       context: .
       dockerfile: Movvi.ApiService/Dockerfile
@@ -31,11 +31,11 @@ services:
         Password=StrongPassword!123;
         TrustServerCertificate=True;
     depends_on:
-      - Movvi-sqlserver
+      - movvi-sqlserver
     networks:
-      - Movvi-network
+      - movvi-network
 
-  Movvi-web:
+  movvi-web:
     container_name: Movvi-web
     build:
       context: .
@@ -47,9 +47,9 @@ services:
       ASPNETCORE_URLS: http://+:8080
       Api__BaseUrl: http://Movvi-api:8080
     depends_on:
-      - Movvi-api
+      - movvi-api
     networks:
-      - Movvi-network
+      - movvi-network
 
   redis:
     image: redis:7
@@ -58,7 +58,7 @@ services:
       - "6379:6379"
 
 networks:
-  Movvi-network:
+  movvi-network:
     driver: bridge
 
 volumes:
