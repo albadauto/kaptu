@@ -1,7 +1,7 @@
 services:
-  Movvi-sqlserver:
+  movvi-sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: Movvi-sqlserver
+    container_name: movvi-sqlserver
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "StrongPassword!123"
@@ -13,7 +13,7 @@ services:
     networks:
       - movvi-network
 
-  Movvi-api:
+  movvi-api:
     container_name: movvi-api
     build:
       context: .
@@ -36,7 +36,7 @@ services:
       - movvi-network
 
   movvi-web:
-    container_name: Movvi-web
+    container_name: movvi-web
     build:
       context: .
       dockerfile: Movvi.Web/Dockerfile
