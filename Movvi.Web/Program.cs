@@ -23,18 +23,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClientCustom();
 builder.Services.AddScoped<CustomAuthenticationProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(c => c.GetRequiredService<CustomAuthenticationProvider>());
-
-var keysDirectory = Path.Combine(builder.Environment.ContentRootPath, "keys");
-
-if (!Directory.Exists(keysDirectory))
-{
-    Directory.CreateDirectory(keysDirectory);
-}
-
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri("http://localhost")
 });
+var keysDirectory = "/keys";
 
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(keysDirectory))
