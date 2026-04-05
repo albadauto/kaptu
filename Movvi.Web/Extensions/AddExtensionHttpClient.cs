@@ -9,12 +9,12 @@ namespace Movvi.Web.Extensions
         {
             services.AddHttpClient<IUserService, UserService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost");
+                client.BaseAddress = new Uri("http://nginx");
             });
 
             services.AddHttpClient<IAuthService, AuthService>(client =>
             {
-                client.BaseAddress = new Uri("http://localhost");
+                client.BaseAddress = new Uri("http://nginx");
             });
 
             return services;
