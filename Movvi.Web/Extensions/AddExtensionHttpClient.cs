@@ -12,6 +12,11 @@ namespace Movvi.Web.Extensions
                 client.BaseAddress = new Uri("http://localhost");
             });
 
+            services.AddHttpClient<IAuthService, AuthService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost");
+            });
+
             return services;
         }
     }

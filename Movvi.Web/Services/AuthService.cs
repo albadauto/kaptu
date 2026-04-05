@@ -7,24 +7,14 @@ using System.Text.Json;
 
 namespace Movvi.Web.Services
 {
-    public class AuthService : IAuthService
+    public class AuthService(
+        HttpClient httpClient,
+        ILocalStorageService localStorage,
+        CustomAuthenticationProvider authProvider) : IAuthService
     {
-        private readonly HttpClient _http;
-        private readonly ILocalStorageService _localStorage;
-        private readonly CustomAuthenticationProvider _authProvider;
-
-        public AuthService(
-            HttpClient httpClient,
-            ILocalStorageService localStorage,
-            CustomAuthenticationProvider authProvider)
-        {
-            _http = httpClient;
-            _localStorage = localStorage;
-            _authProvider = authProvider;
-
-            _http.BaseAddress =
-                new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
-        }
+        private readonly HttpClient _http = httpClient;
+        private readonly ILocalStorageService _localStorage = localStorage;
+        private readonly CustomAuthenticationProvider _authProvider = authProvider;
 
         public async Task<bool> SendMailOtp(string mail)
         {
