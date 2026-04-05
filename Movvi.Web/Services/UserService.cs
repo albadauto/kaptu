@@ -6,21 +6,12 @@ using System.Text.Json;
 
 namespace Movvi.Web.Services;
 
-public class UserService : IUserService
+public class UserService(
+    HttpClient httpClient,
+    ILocalStorageService localStorageService) : IUserService
 {
-    private readonly HttpClient _http;
-    private readonly ILocalStorageService _localStorage;
-
-    public UserService(
-        HttpClient httpClient,
-        ILocalStorageService localStorageService)
-    {
-        _http = httpClient;
-        _localStorage = localStorageService;
-
-        _http.BaseAddress =
-            new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
-    }
+    private readonly HttpClient _http = httpClient;
+    private readonly ILocalStorageService _localStorage = localStorageService;
 
     public async Task<bool> AddUser()
     {

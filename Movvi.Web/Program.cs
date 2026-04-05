@@ -31,6 +31,11 @@ if (!Directory.Exists(keysDirectory))
     Directory.CreateDirectory(keysDirectory);
 }
 
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("http://localhost")
+});
+
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(keysDirectory))
     .SetApplicationName("movvi-app");

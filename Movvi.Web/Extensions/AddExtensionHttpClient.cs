@@ -9,9 +9,9 @@ namespace Movvi.Web.Extensions
         {
             services.AddHttpClient<IUserService, UserService>(client =>
             {
-                client.BaseAddress =
-                    new Uri(Helpers.AppSettingsHelper.GetApiUrl("Service")!);
+                client.BaseAddress = new Uri("http://localhost");
             });
+
             return services;
         }
     }
