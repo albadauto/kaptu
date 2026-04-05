@@ -7,7 +7,8 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-
+RUN mkdir /keys \
+    && chmod 777 /keys
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
