@@ -51,11 +51,31 @@
       networks:
         - movvi-network
 
+<<<<<<< HEAD
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - movvi-web
+      - movvi-api
+    networks:
+      - movvi-network
+=======
     redis:
       image: redis:7
       container_name: redis
       ports:
         - "6379:6379"
+>>>>>>> 4f2d3e28f0957a040826dca2a8276508b78c1335
 
   networks:
     movvi-network:
