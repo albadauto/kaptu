@@ -1,13 +1,14 @@
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Movvi.Web.Components;
+using Movvi.Web.Extensions;
 using Movvi.Web.Helpers;
 using Movvi.Web.Repository;
 using Movvi.Web.Repository.Interface;
 using Movvi.Web.Services;
 using Movvi.Web.Services.Interface;
-using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
-using Movvi.Web.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,7 +24,9 @@ builder.Services.AddHttpClientCustom();
 builder.Services.AddScoped<CustomAuthenticationProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(c => c.GetRequiredService<CustomAuthenticationProvider>());
 
-
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/keys"))
+    .SetApplicationName("movvi-app");
 var app = builder.Build();
 var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
 AppSettingsHelper.Initialize(builder.Configuration, builder.Environment, httpContextAccessor);
