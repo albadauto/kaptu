@@ -17,6 +17,8 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.LicenseKey = Environment.GetEnvironmentVariable("MEDIATR_AUTOMAPPER_APIKEY");
 });
 
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -68,7 +70,11 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SqlServerContext>();
+    db.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
