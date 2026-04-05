@@ -57,9 +57,6 @@ builder.Services.AddSwaggerGen(c =>
         [new OpenApiSecuritySchemeReference("bearer", document)] = []
     });
 });
-builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo("/keys"))
-    .SetApplicationName("movvi-app");
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
