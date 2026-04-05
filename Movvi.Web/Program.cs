@@ -24,8 +24,15 @@ builder.Services.AddHttpClientCustom();
 builder.Services.AddScoped<CustomAuthenticationProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(c => c.GetRequiredService<CustomAuthenticationProvider>());
 
+var keysDirectory = Path.Combine(builder.Environment.ContentRootPath, "keys");
+
+if (!Directory.Exists(keysDirectory))
+{
+    Directory.CreateDirectory(keysDirectory);
+}
+
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo("/keys"))
+    .PersistKeysToFileSystem(new DirectoryInfo(keysDirectory))
     .SetApplicationName("movvi-app");
 var app = builder.Build();
 var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
