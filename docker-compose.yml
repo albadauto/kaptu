@@ -56,6 +56,18 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - movvi-web
+      - movvi-api
+    networks:
+      - movvi-network
 
 networks:
   movvi-network:
