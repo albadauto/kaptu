@@ -1,4 +1,5 @@
-﻿using Movvi.Web.Services;
+﻿using Movvi.Web.Helpers;
+using Movvi.Web.Services;
 using Movvi.Web.Services.Interface;
 
 namespace Movvi.Web.Extensions
@@ -9,13 +10,10 @@ namespace Movvi.Web.Extensions
         {
             services.AddHttpClient<IUserService, UserService>(client =>
             {
-                client.BaseAddress = new Uri("http://nginx");
+                client.BaseAddress = new Uri(AppSettingsHelper.GetApiUrl("Service")!);
             });
 
-            services.AddHttpClient<IAuthService, AuthService>(client =>
-            {
-                client.BaseAddress = new Uri("http://nginx");
-            });
+            services.AddHttpClient<IAuthService, AuthService>(AppSettingsHelper.GetApiUrl("Service")!);
 
             return services;
         }
