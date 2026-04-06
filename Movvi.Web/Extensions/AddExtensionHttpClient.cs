@@ -13,7 +13,10 @@ namespace Movvi.Web.Extensions
                 client.BaseAddress = new Uri(AppSettingsHelper.GetApiUrl("Service")!);
             });
 
-            services.AddHttpClient<IAuthService, AuthService>(AppSettingsHelper.GetApiUrl("Service")!);
+            services.AddHttpClient<IAuthService, AuthService>(client =>
+            {
+                client.BaseAddress = new Uri(AppSettingsHelper.GetApiUrl("Service")!);
+            });
 
             return services;
         }
