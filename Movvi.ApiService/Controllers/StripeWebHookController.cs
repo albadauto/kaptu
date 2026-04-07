@@ -9,7 +9,7 @@ namespace Movvi.ApiService.Controllers
     [ApiController]
     public class StripeWebHookController : ControllerBase
     {
-        private const string EndpointSecret = "whsec_1a150eb4c2c07b8c1c30b0820c03bfd342de7d30d1ff78ca7185cdccc6e962d3";
+        private const string EndpointSecret = "whsec_UqCpLG5PKoBy3PJP2Tzp3V57vGdExR6a";
 
         [HttpPost]
         public async Task<IActionResult> Handle()
