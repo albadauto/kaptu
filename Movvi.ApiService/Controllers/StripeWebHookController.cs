@@ -72,7 +72,7 @@ namespace Movvi.ApiService.Controllers
 
                         var plan = await _mediator.Send(new GetPlanByPriceIdQuery(priceId));
                         Console.WriteLine($"Plano selecionado: {plan.Name}");
-                        await _mediator.Send(new CreatePremiumUserCommand(0, int.Parse(session.ClientReferenceId), plan.Id, DateTime.Now, DateTime.Now.AddMonths(1), true));
+                        await _mediator.Send(new CreatePremiumUserCommand(0, int.Parse(session.ClientReferenceId), plan.Id, DateTime.Now.AddMonths(1),DateTime.Now, true));
                         Console.WriteLine($"Webhook executado");
                         break;
                     }

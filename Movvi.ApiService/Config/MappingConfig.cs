@@ -17,6 +17,10 @@ namespace Movvi.ApiService.Config
             CreateMap<Tenant, CreateTenantCommand>();
             CreateMap<Plans, PlanDTO>();
             CreateMap<PlanDTO, Plans>();
+            CreateMap<PremiumUsers, PremiumUsersDTO>();
+            CreateMap<PremiumUsersDTO, PremiumUsers>();
+            CreateMap<UserDTO, User>();
+            CreateMap<User, UserDTO>();
         }
     }
 }

@@ -3,6 +3,7 @@ using Movvi.DLL.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Movvi.ApiService.Queries.PremiumUser;
 
 namespace Movvi.ApiService.Controllers
 {
@@ -24,6 +25,24 @@ namespace Movvi.ApiService.Controllers
             {
                 await _mediator.Send(command);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+          
+        }
+        [HttpGet]
+        [Route("get-premium-user/{userId}")]
+        public async Task<IActionResult> GetPremiumUser(int userId)
+        {
+            try
+            {
+                var premiumUser = await _mediator.Send(new GetPremiumUserByIdQuery(userId));
+                if(premiumUser == null)
+                    return NotFound("Premium user not found.");
+                return Ok(premiumUser);
             }
             catch (Exception ex)
             {

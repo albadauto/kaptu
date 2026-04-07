@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Movvi.DLL.DTO.Output;
 
 namespace Movvi.ApiService.Controllers
 {
@@ -62,7 +63,7 @@ namespace Movvi.ApiService.Controllers
 
         [HttpPost]
         [Route("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody] GetUserByEmailPasswordQuery query)
+        public async Task<ActionResult<AuthOut>> Authenticate([FromBody] GetUserByEmailPasswordQuery query)
         {
             try
             {
@@ -72,7 +73,12 @@ namespace Movvi.ApiService.Controllers
                    if(BCrypt.Net.BCrypt.Verify(query.Password, user.Password))
                     {
                         var token = JwtConfig.GenerateToken(user);
-                        return Ok(token);
+                        AuthOut authOut = new AuthOut
+                        {
+                            UserId = user.Id,
+                            Token = token,
+                        };
+                        return Ok(authOut);
                     }
                     else
                     {

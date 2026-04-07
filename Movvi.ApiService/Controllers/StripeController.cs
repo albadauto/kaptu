@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Movvi.ApiService.Queries.Plans.GetPlans;
+using Movvi.ApiService.Queries.User.GetUserById;
 using Movvi.DLL.DTO;
 using Stripe.Checkout;
 
@@ -17,9 +18,11 @@ namespace Movvi.ApiService.Controllers
             _mediator = mediator;
         }
         [HttpPost]
+        [Route("create-checkout")]
         public async Task<IActionResult> CreateCheckoutSession(PremiumUsersDTO dto)
         {
-            var plan = await _mediator.Send(new GetPlansQuery(dto.Plan));
+            var user = await _mediator.Send(new GetUserByIdQuery(dto.UserId));
+            var plan = await _mediator.Send(new GetPlansQuery(user.PlanId));
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -39,7 +42,7 @@ namespace Movvi.ApiService.Controllers
 
             var service = new SessionService();
             Session session = service.Create(options);
-            return Ok(new { sessionId = session.Url });
+            return Ok(session.Url);
         }
     }
 }

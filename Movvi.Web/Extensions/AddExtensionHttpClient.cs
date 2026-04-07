@@ -17,6 +17,14 @@ namespace Movvi.Web.Extensions
             {
                 client.BaseAddress = new Uri(AppSettingsHelper.GetApiUrl("Service")!);
             });
+            services.AddHttpClient<IPremiumUserService, PremiumUserService>(client =>
+            {
+                client.BaseAddress = new Uri(AppSettingsHelper.GetApiUrl("Service")!);
+            });
+            services.AddHttpClient<IStripeService, StripeService>(client =>
+            {
+                client.BaseAddress = new Uri(AppSettingsHelper.GetApiUrl("Service")!);
+            });
 
             return services;
         }

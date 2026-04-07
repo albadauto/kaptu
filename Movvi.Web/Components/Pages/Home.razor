@@ -1,6 +1,8 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @inject IAuthService AuthService
+@inject IPremiumUserService premiumUserService
+@inject IStripeService stripeService
 @using MudBlazor
 
 <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center" Style="min-height:100vh;">
@@ -72,7 +74,7 @@
         if (firstRender)
         {
             await AuthService.Logout();
-            StateHasChanged(); 
+            StateHasChanged();
 
         }
     }
@@ -83,10 +85,21 @@
         if (form.IsValid)
         {
             var result = await AuthService.Authenticate(dto);
-            if (result)
+
+            if (result != null)
             {
-                Snackbar.Add("Login realizado com sucesso!", Severity.Success);
-                navigationManager.NavigateTo("/dashboard");
+                var premiumUser = await premiumUserService.GetPremiumUser(result.UserId);
+                if (premiumUser != null)
+                {
+                    Snackbar.Add("Login realizado com sucesso!", Severity.Success);
+                    navigationManager.NavigateTo("/dashboard");
+                }
+                else
+                {
+                   string urlCheckout = await stripeService.CreateCheckoutSession(result.UserId);
+                    navigationManager.NavigateTo(urlCheckout);
+                }
+
             }
             else
             {

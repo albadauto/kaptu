@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Movvi.DLL.DTO;
+using Movvi.DLL.DTO.Output;
 using Movvi.Web.Extensions;
 using Movvi.Web.Services.Interface;
 using System.Text;
@@ -70,23 +71,22 @@ namespace Movvi.Web.Services
         }
 
 
-        public async Task<bool> Authenticate(LoginDTO dto)
+        public async Task<AuthOut> Authenticate(LoginDTO dto)
         {
-            var response =
-                await _http.PostAsJsonAsync("/api/Auth/authenticate", dto);
+            var response = await _http.PostAsJsonAsync("/api/Auth/authenticate", dto);
 
             if (!response.IsSuccessStatusCode)
-                return false;
+                return null;
 
-            var token = await response.Content.ReadAsStringAsync();
+            var auth = await response.Content.ReadFromJsonAsync<AuthOut>();
 
-            await SetLocalStorage("authToken", token);
+            await SetLocalStorage("authToken", auth.Token);
 
-            dto.Token = token;
+            dto.Token = auth.Token;
 
             await _authProvider.MarkUserAsAuthenticated(dto);
 
-            return true;
+            return auth;
         }
 
         public async Task Logout()
