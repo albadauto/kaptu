@@ -7,6 +7,7 @@ namespace Movvi.ApiService.Controllers
     [ApiController]
     public class HealthController : ControllerBase
     {
+        [HttpGet]
         public Task<IActionResult> Get()
         {
             return Task.FromResult<IActionResult>(Ok("API is healthy"));

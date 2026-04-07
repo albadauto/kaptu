@@ -19,9 +19,6 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 
-
-// Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -73,8 +70,16 @@ builder.Services.AddAuthentication("Bearer")
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<SqlServerContext>();
-    db.Database.Migrate();
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<SqlServerContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro ao aplicar as migrações. Talvez o banco já exista.");
+    }
 }
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
