@@ -1,0 +1,70 @@
+﻿@page "/payment-confirmation/{status}"
+<MudContainer>
+    @if(status == "success")
+    {
+        <MudGrid Justify="Justify.Center" Class="mt-5">
+            <MudItem>
+                <MudImage Src="https://cdn-icons-png.flaticon.com/512/25/25404.png" Width="100" />
+            </MudItem>
+        
+        </MudGrid>
+
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudText Typo="Typo.h4">Seu pagamento foi confirmado com sucesso!</MudText>
+            </MudItem>
+      
+        </MudGrid>
+
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudText Typo="Typo.subtitle1">
+                    Agradecemos pelo seu pagamento.
+                    Clique no botão abaixo para ser redirecionado para dashboard
+                </MudText>
+            </MudItem>
+        </MudGrid>
+        <MudGrid Justify="Justify.Center" Class="mt-4">
+            <MudItem>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" Class="p-2">Ir para dashboard</MudButton>
+            </MudItem>
+
+        </MudGrid>
+    }
+    else
+    {
+        <MudGrid Justify="Justify.Center" Class="mt-5 mb-4">
+            <MudItem>
+                <MudImage Src="https://cdn-icons-png.flaticon.com/512/75/75519.png" Width="100" />
+            </MudItem>
+        
+        </MudGrid>
+
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudText Typo="Typo.h4">Seu pagamento foi recusado/cancelado!</MudText>
+            </MudItem>
+      
+        </MudGrid>
+
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudText Typo="Typo.subtitle1">
+                   Algo de errado aconteceu com o pagamento. Clique no botão abaixo para ser redirecionado para a tela de login
+                </MudText>
+            </MudItem>
+        </MudGrid>
+        <MudGrid Justify="Justify.Center" Class="mt-4">
+            <MudItem>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" Class="p-2" Href="/">Ir para login</MudButton>
+            </MudItem>
+
+        </MudGrid>
+    }
+
+   
+</MudContainer>
+@code {
+    [Parameter]
+    public string status { get; set; }
+}

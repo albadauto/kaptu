@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Movvi.ApiService.Queries.Parameters.GetParameter;
 using Movvi.ApiService.Queries.Plans.GetPlans;
 using Movvi.ApiService.Queries.User.GetUserById;
 using Movvi.DLL.DTO;
@@ -23,6 +24,7 @@ namespace Movvi.ApiService.Controllers
         {
             var user = await _mediator.Send(new GetUserByIdQuery(dto.UserId));
             var plan = await _mediator.Send(new GetPlansQuery(user.PlanId));
+            var parameter = await _mediator.Send(new GetParameterQuery("BASEURL"));
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -36,8 +38,8 @@ namespace Movvi.ApiService.Controllers
                         Quantity = 1
                     }
                 },
-                SuccessUrl = "https://seusite.com/sucesso?session_id={CHECKOUT_SESSION_ID}",
-                CancelUrl = "https://seusite.com/cancelado",
+                SuccessUrl = $"{parameter.Value}/payment-confirmation/success",
+                CancelUrl = $"{parameter.Value}/payment-confirmation/error",
             };
 
             var service = new SessionService();

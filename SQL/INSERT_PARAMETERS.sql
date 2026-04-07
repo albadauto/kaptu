@@ -1,4 +1,4 @@
-USE Movvi
+USE MovviDb
 GO
 
 /* ================================
@@ -109,3 +109,6 @@ Comunicação Movvi
 
 END
 GO
+GO
+INSERT INTO PARAMETERS (Parameter, [VALUE])
+VALUES ('BASEURL', 'https://movvi.cognite.com.br')
