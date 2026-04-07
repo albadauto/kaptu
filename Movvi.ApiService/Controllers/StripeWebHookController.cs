@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Movvi.ApiService.Commands.CreatePremiumUser;
+using Movvi.ApiService.Queries.Plans.GetPlanByPriceId;
+using Movvi.ApiService.Queries.Plans.GetPlans;
 using Stripe;
 using Stripe.Checkout;
 using System.Text;
@@ -10,6 +14,11 @@ namespace Movvi.ApiService.Controllers
     public class StripeWebHookController : ControllerBase
     {
         private const string EndpointSecret = "whsec_UqCpLG5PKoBy3PJP2Tzp3V57vGdExR6a";
+        private readonly IMediator _mediator;
+        public StripeWebHookController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         [HttpPost]
         public async Task<IActionResult> Handle()
@@ -46,7 +55,10 @@ namespace Movvi.ApiService.Controllers
                 case "checkout.session.completed":
                     {
                         var session = stripeEvent.Data.Object as Session;
-
+                        var subscriptionService = new SubscriptionService();
+                        var subscription = subscriptionService.Get(session.SubscriptionId);
+                        var priceId = subscription.Items.Data[0].Price.Id;
+                        Console.WriteLine($"StripePriceId: {priceId}");
                         if (session == null)
                             return BadRequest();
 
@@ -58,6 +70,10 @@ namespace Movvi.ApiService.Controllers
                         Console.WriteLine($"PaymentIntent: {paymentIntentId}");
                         Console.WriteLine($"Email: {customerEmail}");
 
+                        var plan = await _mediator.Send(new GetPlanByPriceIdQuery(priceId));
+                        Console.WriteLine($"Plano selecionado: {plan.Name}");
+                        await _mediator.Send(new CreatePremiumUserCommand(0, int.Parse(session.ClientReferenceId), plan.Id, DateTime.Now, DateTime.Now.AddMonths(1), true));
+                        Console.WriteLine($"Webhook executado");
                         break;
                     }
 

@@ -29,7 +29,7 @@ namespace Movvi.ApiService.Controllers
                 {
                     new SessionLineItemOptions
                     {
-                        Price = plan.StripePriceId, // use o ID criado
+                        Price = plan.StripePriceId, 
                         Quantity = 1
                     }
                 },
