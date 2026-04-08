@@ -70,6 +70,13 @@ namespace Movvi.Web.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> IsUserExistsByMail(string email)
+        {
+            var response = await _http.GetAsync(
+                $"/api/User/get-user-by-email?email={Uri.EscapeDataString(email)}");
+            return response.IsSuccessStatusCode;
+        }
+
 
         public async Task<AuthOut> Authenticate(LoginDTO dto)
         {

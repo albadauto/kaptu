@@ -14,6 +14,8 @@ namespace Movvi.Web.Services.Interface
         public Task SetLocalStorage(string key, string value);
         public Task<string> GetLocalStorage(string key);
         public Task Logout();
+        public Task<bool> IsUserExistsByMail(string email);
+
 
     }
 }

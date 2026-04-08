@@ -53,14 +53,14 @@ style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box
 
 <tr>
 <td align="center"
-style="background:linear-gradient(135deg,#2e1f92,#4b3fcf);padding:30px;">
+style="background:linear-gradient(135deg,#f1efe7,#f1efe7);padding:30px;">
 
-<img src="https://i.postimg.cc/9MX3GdV0/logo-white.png"
+<img src="https://i.ibb.co/rGd8CpB6/logo-movvi.png"
 alt="Movvi Logo"
 width="180"
 style="display:block;margin-bottom:15px">
 
-<h1 style="color:#ffffff;margin:0;font-size:24px;font-weight:600;">
+<h1 style="color:#050a30;margin:0;font-size:24px;font-weight:600;">
 Comunicação Movvi
 </h1>
 
@@ -68,13 +68,13 @@ Comunicação Movvi
 </tr>
 
 <tr>
-<td style="height:6px;background:#ff6a3d"></td>
+<td style="height:6px;background:#00ffba"></td>
 </tr>
 
 <tr>
 <td style="padding:40px 35px;color:#333333;font-size:16px;line-height:1.6;">
 
-<h2 style="color:#2e1f92;margin-top:0;">
+<h2 style="color:#050a30;margin-top:0;">
 {{TITULO_DA_MENSAGEM}}
 </h2>
 

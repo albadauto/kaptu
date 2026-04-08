@@ -75,9 +75,15 @@
     {
         _isLoading = true;
         await form.Validate();
-
         if (form.IsValid)
         {
+            var isUserExists = await AuthService.IsUserExistsByMail(user.Email);
+            if (isUserExists)
+            {
+                Snackbar.Add("Ocorreu um erro, usuário já cadastrado.", Severity.Error);
+                _isLoading = false;
+                return;
+            }
             await AuthService.SendMailOtp(user.Email);
             await AuthService.SetUserLocalStorage(user);
             navigationManager.NavigateTo("/otp");

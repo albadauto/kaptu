@@ -1,15 +1,41 @@
 ﻿@inherits LayoutComponentBase
-<MudBlazorComponent />
-<div class="page">
-    @if (false)
-    {
-        <div class="sidebar">
-            <NavMenu />
-        </div>
+@inject AuthenticationStateProvider AuthProvider
 
-    }
-    
-    <main>
-      @Body
+<MudBlazorComponent />
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized>
+            <NavMenu />
+        </Authorized>
+    </AuthorizeView>
+
+    <main class="@(isAuthenticated ? "content" : string.Empty)">
+        @Body
     </main>
 </div>
+
+@code {
+    private bool isAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        isAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+
+        AuthProvider.AuthenticationStateChanged += OnAuthStateChanged;
+    }
+
+    private async void OnAuthStateChanged(Task<AuthenticationState> task)
+    {
+        var authState = await task;
+        isAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        AuthProvider.AuthenticationStateChanged -= OnAuthStateChanged;
+    }
+}
